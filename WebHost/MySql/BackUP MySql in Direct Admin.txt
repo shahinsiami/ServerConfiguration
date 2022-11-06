@@ -1,0 +1,17 @@
+cd /usr/local/directadmin/custombuild
+./build set mysql_backup yes
+./build mysql_backup
+
+
+
+mv mysql_backups mysql_backups.`date +%F`
+
+
+
+
+cd /usr/local/directadmin/custombuild/mysql_backups
+wget http://files1.directadmin.com/services/all/mysql/restore_sql_files.sh
+chmod 755 restore_sql_files.sh
+./restore_sql_files.sh
+
+./restore_sql_files.sh with_mysql

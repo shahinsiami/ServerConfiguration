@@ -1,0 +1,66 @@
+Enable debug mode for cPHulk
+
+touch /var/cpanel/hulkd/debug
+
+touch /var/cpanel/hulkd/debug
+Check cPHulk’s status
+
+ps aux | grep -i cphulk
+
+ps aux | grep -i cphulk
+Restart the cPHulk daemon (cphulkd)
+
+Perform a soft restart.
+
+/scripts/restartsrv_cphulkd
+
+/scripts/restartsrv_cphulkd
+Perform a hard restart and force the system to flush the daemon’s memory.
+
+ /scripts/restartsrv_cphulkd --stop; /scripts/restartsrv_cphulkd --start
+
+ /scripts/restartsrv_cphulkd --stop; /scripts/restartsrv_cphulkd --start
+Disable cPHulk
+To disable cPHulk via the command line
+
+/usr/local/cpanel/etc/init/stopcphulkd
+/usr/local/cpanel/bin/cphulk_pam_ctl --disable
+
+/usr/local/cpanel/etc/init/stopcphulkd
+/usr/local/cpanel/bin/cphulk_pam_ctl --disable
+To disable cPHulk to keep it offline, even after a restart of cPanel & WHM
+
+rm /var/cpanel/hulkd/enabled
+
+rm /var/cpanel/hulkd/enabled
+Log files
+
+/usr/local/cpanel/logs/cphulkd.log
+/usr/local/cpanel/logs/cphulkd_errors.log
+
+/usr/local/cpanel/logs/cphulkd.log
+/usr/local/cpanel/logs/cphulkd_errors.log
+IP address management
+
+Add IP addresses to the whitelist
+
+/scripts/cphulkdwhitelist 192.168.0.20
+
+/scripts/cphulkdwhitelist 192.168.0.20
+Add IP addresses to the blacklist
+
+/scripts/cphulkdblacklist 192.168.0.20
+
+/scripts/cphulkdblacklist 192.168.0.20
+Remove lockouts
+If cPHulk locks you out of your cPanel account, the /scripts2/doautofixer?autofix=disable_cphulkd script in WHM can disable cPHulk and allow you to log in.
+
+https://www.example.com:2087/scripts2/doautofixer?autofix=disable_cphulkd
+
+https://www.example.com:2087/scripts2/doautofixer?autofix=disable_cphulkd
+If you enabled the Block IP addresses at the firewall level if they trigger brute force protection or the Block IP addresses at the firewall level if they trigger a one-day block options, remove the iptables rule that the system created. To do this, run the following command:
+
+iptables -F cphulk && mysql -e "Delete from cphulkd.login_track;"
+
+iptables -F cphulk && mysql -e "Delete from cphulkd.login_track;"
+ 

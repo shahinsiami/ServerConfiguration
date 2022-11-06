@@ -1,0 +1,30 @@
+csf
+wget http://download.configserver.com/csf.tgz
+
+
+tar -xzf csf.tgz
+
+cd csf
+
+sh install.sh
+
+
+
+/usr/local/csf/bin/csftest.pl
+
+مسیر فایل کانفیگ csf :
+
+/etc/csf/csf.conf
+
+
+
+TESTING = "1"
+
+
+
+TESTING = "0"
+
+
+
+https://download.configserver.com/csf/readme.txt
+

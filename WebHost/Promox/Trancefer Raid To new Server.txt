@@ -1,0 +1,26 @@
+
+umount /raidbc
+
+
+mdadm --stop /dev/md0
+
+
+
+mkdir /raidbc
+
+
+mdadm —assemble —scan
+
+
+vim /etc/fstab
+dev/md0 /raidbc ext3/
+
+
+
+mount /dev/md0 /raidbc
+
+
+
+cp /etc/mdadm/mdadm.conf /etc/mdadm/mdadm.conf.save
+/usr/share/mdadm/mkconf --generate > /etc/mdadm/mdadm.conf
+

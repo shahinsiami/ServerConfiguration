@@ -1,0 +1,15 @@
+$ selectorctl –list
+
+
+
+$ selectorctl –current
+
+
+
+$ selectorctl --list-extensions --version=5.3
+
+
+$ selectorctl --user-current --user=user1
+
+
+$ selectorctl --set-user-current=5.4 --user=user1

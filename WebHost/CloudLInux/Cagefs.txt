@@ -1,0 +1,16 @@
+$ cagefsctl --enable [username]
+
+
+$ cagefsctl --disable [username]
+
+
+$ cagefsctl --list-enabled
+
+
+$ cagefsctl --list-disabled
+
+
+$ cagefsctl --display-user-mode
+
+
+$ cagefsctl --list-enabled | grep testbe

@@ -1,0 +1,24 @@
+selectorctl --list
+
+
+selectorctl --current --show-native-version
+
+
+
+
+selectorctl --user-current --user=UU
+
+
+
+
+selectorctl --set-user-current=5.3 --user=UU
+
+
+
+
+
+selectorctl --list-extensions --version=7.1
+
+
+
+ selectorctl --enable-user-extensions=pdo,phar --version=5.2 --user=user1

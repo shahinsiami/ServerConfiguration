@@ -1,0 +1,15 @@
+/usr/local/cpanel/scripts/pkgacct [arguments] username destination
+
+
+for backup in `\ls /var/cpanel/users/`; do /scripts/pkgacct $backup; done
+
+for backup in `\ls /var/cpanel/users/`; do /scripts/pkgacct $backup; done
+
+
+/scripts/restorepkg cpaneluser
+
+/scripts/restorepkg cpaneluser
+
+
+for restore in `\cat /home/user.txt`; do echo /scripts/restorepkg $restore; done
+

@@ -1,0 +1,17 @@
+
+umount /raidef
+
+
+mdadm --stop /dev/md0
+mdadm --remove /dev/md0
+
+
+
+ mv /raidef /rai-def
+
+
+cp /etc/mdadm/mdadm.conf /etc/mdadm/mdadm.conf.save
+
+usr/share/mdadm/mkconf --generate > /etc/mdadm/mdadm.conf
+
+

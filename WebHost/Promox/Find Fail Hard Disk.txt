@@ -1,0 +1,13 @@
+
+storcli /c0 /eall /sall show 
+
+
+
+
+smartctl -a -d sat+megaRAID,77 /dev/sda | grep Serial
+
+
+
+storcli /c0 /eall /sall show
+
+

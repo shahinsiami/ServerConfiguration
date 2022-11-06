@@ -1,0 +1,194 @@
+ <?php
+require_once "Mail.php";
+$from = "support@parsdata.com";
+$to = "test@yahoo.com";
+$subject = "Hi!";
+$body = "Hi,\n\nHow are you?";
+$host = "localhost";
+$username = "support@parsdata.com";
+$password = "your email password";
+$headers = array ('From' => $from,
+'To' => $to,
+'Subject' => $subject);
+$smtp = Mail::factory('smtp',
+array ('host' => $host,
+'auth' => true,
+'username' => $username,
+'password' => $password));
+$mail = $smtp->send($to, $headers, $body);
+if (PEAR::isError($mail)) {
+ 
+echo("<p>" . $mail->getMessage() . "</p>");
+} else {
+echo("<p>Message successfully sent!</p>");
+}
+?>
+
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+<?
+	$to = "test@yahoo.com";
+	$from = "support@parspack.com";
+	$password = "your email password";
+	$subject = "this is subject";
+	$contents = "This is a test";
+	ParsPack_Send_Mail($from,$to,$password,$subject,$contents);
+	print("<HTML><BODY>Mail sent</body></html>!");
+	function ParsPack_Send_Mail($from, $to,$password, $subject, $message)
+	{
+		$namefrom = "";
+		$nameto = "";
+		/* your configuration here */
+		$smtpServer = "Mail Server IP"; //does not accept STARTTLS
+		$port = "25"; // try 587 if this fails
+		$timeout = "45"; //typical timeout. try 45 for slow servers
+		$username = $from; //your gmail account
+		$password = $password; //the pass for your gmail
+		$localhost = $_SERVER['REMOTE_ADDR']; //requires a real ip
+		$newLine = "\r\n"; //var just for newlines 
+		/* you shouldn't need to mod anything else */
+		//connect to the host and port
+		$smtpConnect = fsockopen($smtpServer, $port, $errno, $errstr, $timeout);
+		//echo $errstr." - ".$errno;
+		$smtpResponse = fgets($smtpConnect, 4096);
+		if(empty($smtpConnect))
+		{
+			$output = "Failed to connect: $smtpResponse";
+			echo $output;
+			return $output;
+		}
+		else
+		{
+			//$logArray['connection'] = "Connected to: $smtpResponse";
+			// echo "connection accepted<br>".$smtpResponse."<p />Continuing<p 
+			//>";
+		}
+		//you have to say HELO again after TLS is started
+		fputs($smtpConnect, "HELO $localhost". $newLine);
+		$smtpResponse = fgets($smtpConnect, 4096);
+		$logArray['heloresponse2'] = "$smtpResponse";
+		//request for auth login
+		fputs($smtpConnect,"AUTH LOGIN" . $newLine);
+		$smtpResponse = fgets($smtpConnect, 4096);
+		$logArray['authrequest'] = "$smtpResponse";
+		//send the username
+		fputs($smtpConnect, base64_encode($username) . $newLine);
+		$smtpResponse = fgets($smtpConnect, 4096);
+		$logArray['authusername'] = "$smtpResponse";
+		//send the password
+		fputs($smtpConnect, base64_encode($password) . $newLine);
+		$smtpResponse = fgets($smtpConnect, 4096);
+		$logArray['authpassword'] = "$smtpResponse";
+		//email from
+		fputs($smtpConnect, "MAIL FROM: <$from>" . $newLine);
+		$smtpResponse = fgets($smtpConnect, 4096);
+		$logArray['mailfromresponse'] = "$smtpResponse";
+		//email to
+		fputs($smtpConnect, "RCPT TO: <$to>" . $newLine);
+		$smtpResponse = fgets($smtpConnect, 4096);
+		$logArray['mailtoresponse'] = "$smtpResponse";
+		//the email
+		fputs($smtpConnect, "DATA" . $newLine);
+		$smtpResponse = fgets($smtpConnect, 4096);
+		$logArray['data1response'] = "$smtpResponse";
+		//construct headers
+		$headers = "MIME-Version: 1.0" . $newLine;
+		$headers .= "Content-type: text/html; charset=iso-8859-1" . $newLine;
+		$headers .= "To: $nameto <$to>" . $newLine;
+		//observe the . after the newline, it signals the end of message
+		fputs($smtpConnect, "To: $to\r\nFrom: $from\r\nSubject: $subject\r\n$headers\r\n\r\n$message\r\n.\r\n");
+		$smtpResponse = fgets($smtpConnect, 4096);
+		$logArray['data2response'] = "$smtpResponse";
+		// say goodbye
+		fputs($smtpConnect,"QUIT" . $newLine);
+		$smtpResponse = fgets($smtpConnect, 4096);
+		$logArray['quitresponse'] = "$smtpResponse";
+		$logArray['quitcode'] = substr($smtpResponse,0,3);
+		fclose($smtpConnect);
+		//a return value of 221 in $retVal["quitcode"] is a success
+		return($logArray);
+	}
+?>

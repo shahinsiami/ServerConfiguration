@@ -1,0 +1,33 @@
+
+
+nano /etc/yum.repos.d/mongodb.repo
+
+
+[MongoDB]
+
+name=MongoDB Repository
+
+baseurl=http://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/$basearch/
+
+gpgcheck=1
+
+enabled=1
+
+gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc
+
+
+yum install mongodb-org
+
+
+
+service mongod start
+
+chkconfig mongod on
+
+
+
+mongod --version
+
+
+mongo
+

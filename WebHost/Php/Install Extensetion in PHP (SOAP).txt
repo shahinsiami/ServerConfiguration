@@ -1,0 +1,62 @@
+Soap:
+
+cd /usr/local/directadmin/custombuild
+./build used_configs
+
+vim /usr/local/directadmin/custombuild/configure/ap2/configure.php5
+
+Add: (Note that only the last rule has no slash!)
+–enable-soap
+
+./build php all
+[/php]
+
+
+
+HYPERLINK “https://d.stavrovski.net/blog/how-to-enable-php-soap-intl-and-xmlrpc-in-directadmin/”https://d.stavrovski.net/blog/how-to-enable-php-soap-intl-and-xmlrpc-in-directadmin/
+
+[php]
+نصب freetype ، xmlrpc ، php-imap، domxml ، wddx:
+yum install freetype-devel
+yum install libicu-devel
+yum install libc-client libc-client-devel
+[/php]
+
+centos 64
+[php]
+yum install krb5-appl-clients.x86_64
+yum install krb5-appl-servers.x86_64
+yum install libxml2-devel libxslt-devel libgcrypt-devel
+
+cd /usr/local/directadmin/custombuild
+mkdir -p custom/ap2
+cp -fp configure/ap2/configure.php5 custom/ap2/configure.php5
+[/php]
+
+
+[php]
+–with-xmlrpc \
+–with-freetype-dir=/usr/include/freetype2/ \
+–with-freetype \
+–with-imap=/usr/lib/dovecot/imap \
+–with-imap-ssl \
+–with-dom=/usr/lib \
+–with-dom-exslt=/usr/lib \
+–with-dom-xslt=/usr/lib \
+–enable-wddx \
+–enable-mbstring \
+[/php]
+
+م.
+[php]
+./build clean
+./build php n
+service httpd restart
+[/php]
+
+
+[php]
+yum install gd gd-devel php-gd
+
+service httpd restart
+[/php]

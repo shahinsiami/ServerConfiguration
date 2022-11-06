@@ -1,0 +1,12 @@
+qm stop VMID
+
+
+screen -l -S VMID
+
+
+
+/vzdump VMID --dumpdir=/var/lib/vz/dump
+
+
+
+/vzdump 50080 --dumpdir=/var/lib/vz/dump

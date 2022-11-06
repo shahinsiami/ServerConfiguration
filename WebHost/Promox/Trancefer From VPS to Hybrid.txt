@@ -1,0 +1,11 @@
+scp -r -P 4441 -l 80000 TCPRcvBufPoll=yes vmbackup.vma 192.168.51.18.:/var/lib/vz/dump
+qmrestore vmbackup.vma VMID –force
+
+mkdir /diskc/4850
+ln –s /diskc/4850 /var/lib/vz/images/4850
+
+if error --> failed: storage 's22T' does not exists
+
+
+
+qmrestore --storage local vmbackup.vma VMID

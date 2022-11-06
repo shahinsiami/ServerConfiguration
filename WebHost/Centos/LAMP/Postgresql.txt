@@ -1,0 +1,27 @@
+
+
+yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-6-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+
+yum install postgresql12
+
+yum install postgresql12-server
+
+
+
+service postgresql-12 initdb
+
+chkconfig postgresql-12 on
+
+service postgresql-12 start
+
+
+
+sudo -i -u postgres
+
+
+
+psql
+
+
+
+sudo -u postgres psql

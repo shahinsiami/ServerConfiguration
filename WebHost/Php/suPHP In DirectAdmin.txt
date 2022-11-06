@@ -1,0 +1,75 @@
+
+find /home/*/domains/*/public_html -name ".htaccess" | xargs grep "php_"
+
+find /home/*/domains/*/public_html -name ".htaccess" | xargs grep "php_"
+
+cd /usr/local/directadmin/custombuild
+./build update
+./build clean
+./build set php5_cgi yes
+./build set php5_cli no
+./build used_configs
+
+
+
+
+
+cd /usr/local/directadmin/custombuild
+./build update
+./build clean
+./build set php5_cgi yes
+./build set php5_cli no
+./build used_configs
+
+./build php
+
+./build php
+
+php --ini
+/usr/local/etc/php5/cgi/php.ini	#مسیر صحیح CGI
+/usr/local/lib/php.ini		#مسیر اشتباه و مربوط به CLI
+
+
+php --ini
+/usr/local/etc/php5/cgi/php.ini	#مسیر صحیح CGI
+/usr/local/lib/php.ini		#مسیر اشتباه و مربوط به CLI
+سپس با استفاده از دستور زیر، موارد امنیتی php را بر روی آن اعمال نمائید.
+./build secure_php
+
+./build secure_php
+در تنظیمات جدید، می بایست ownership فایلها اصلاح گردد چرا که suPHP اجازه دسترسی به فایلهایی که owner آنها apache باشد را نخواهد داد در صورتی که در CLI این مورد با مشکلی همراه نبود.
+ls -l /home | grep '^d' | awk '{system("chown -R " $3 ":" $4 " /home/" $9 "/domains")}'
+rm -f /tmp/sess_*
+
+
+ls -l /home | grep '^d' | awk '{system("chown -R " $3 ":" $4 " /home/" $9 "/domains")}'
+rm -f /tmp/sess_*
+سطح دسترسی فایلها و فولدرها نیز می بایست به سطح استاندارد تقلیل سابد چرا که موارد دارای سطح Global Write از سمت suPHP قابل اجرا و دسترسی نخواهند بود.
+find /home/*/domains/*/public_html -type f -exec chmod 0644 {} \; -print
+find /home/*/domains/*/public_html -type d -exec chmod 0755 {} \; -print
+find /home/*/domains/*/public_html -name "*.pl" -exec chmod 0744 {} \; -print
+find /home/*/domains/*/public_html -name "*.cgi" -exec chmod 0744 {} \; -print
+
+
+find /home/*/domains/*/public_html -type f -exec chmod 0644 {} \; -print
+find /home/*/domains/*/public_html -type d -exec chmod 0755 {} \; -print
+find /home/*/domains/*/public_html -name "*.pl" -exec chmod 0744 {} \; -print
+find /home/*/domains/*/public_html -name "*.cgi" -exec chmod 0744 {} \; -print
+
+
+
+
+chown -R webapps:webapps /var/www/html
+find /var/www/html -type f -exec chmod 0644 {} \; -print
+find /var/www/html -type d -exec chmod 0755 {} \; -print
+find /var/www/html -name "*.pl" -exec chmod 0744 {} \; -print
+find /var/www/html -name "*.cgi" -exec chmod 0744 {} \; -print
+
+
+
+
+chown -R webapps:webapps /var/www/html
+find /var/www/html -type f -exec chmod 0644 {} \; -print
+find /var/www/html -type d -exec chmod 0755 {} \; -print
+find /var/www/html -name "*.pl" -exec chmod 0744 {} \; -print
+find /var/www/html -name "*.cgi" -exec chmod 0744 {} \; -print

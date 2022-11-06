@@ -1,0 +1,7 @@
+mkdir /var/lib/mysqltmp	
+chown mysql:mysql /var/lib/mysqltmp
+id mysql
+tmpfs /var/lib/mysqltmp tmpfs rw,gid=27,uid=27,size=256M,nr_inodes=10k,mode=0700 0 0
+mount /var/lib/mysqltmp
+tmpdir=/var/lib/mysqltm
+/sbin/service mysqld restart

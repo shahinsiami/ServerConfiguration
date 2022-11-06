@@ -1,0 +1,149 @@
+method 1
+
+http://www.howtogeek.com/50526/setting-up-awstats-on-windows-server-and-iis/
+
+Run awstats , 
+
+C:\Users\Administrator>cd ../../
+C:\>cd AWStats
+C:\AWStats>cd wwwroot
+C:\AWStats\wwwroot>cd cgi-bin
+C:\AWStats\wwwroot\cgi-bin>C:\Perl\bin\perl.exe awstats.pl -config=tamashagar.com
+Error: AWStats database directory defined in config file by 'DirData' parameter
+(∩┐╜C:\AWStats\data∩┐╜) does not exist or is not writable.
+Setup ('./awstats.tamashagar.com.conf' file, web server or permissions) may be wrong.
+Check config file, permissions and AWStats documentation (in 'docs' directory).
+
+C:\AWStats\wwwroot\cgi-bin>
+
+http://www.howtogeek.com/50526/setting-up-awstats-on-windows-server-and-iis/
+ 
+Run awstats , 
+ 
+C:\Users\Administrator>cd ../../
+C:\>cd AWStats
+C:\AWStats>cd wwwroot
+C:\AWStats\wwwroot>cd cgi-bin
+C:\AWStats\wwwroot\cgi-bin>C:\Perl\bin\perl.exe awstats.pl -config=tamashagar.com
+Error: AWStats database directory defined in config file by 'DirData' parameter
+(∩┐╜C:\AWStats\data∩┐╜) does not exist or is not writable.
+Setup ('./awstats.tamashagar.com.conf' file, web server or permissions) may be wrong.
+Check config file, permissions and AWStats documentation (in 'docs' directory).
+ 
+C:\AWStats\wwwroot\cgi-bin>
+
+------------------------------------------------------
+method 2
+
+install perl ( 32bit ) on the server in c:\perl
+
+install awstats 7.0 exe ( latest exe found ) in c:\awstats
+
+create ‘data’ directory under c:\awstats\
+
+IIS:
+
+on server level change the log fields to ( as per awstats documentation )
+
+date time
+c-ip
+cs-username
+cs-method
+cs-uri-stem cs-uri-query
+sc-status
+sc-bytes
+cs-version
+cs(User-Agent)
+cs(Referer)
+
+date time
+c-ip
+cs-username
+cs-method
+cs-uri-stem cs-uri-query
+sc-status
+sc-bytes
+cs-version
+cs(User-Agent)
+cs(Referer)
+Create a virtual directory under the default website named awstats. Point this virtual directory to the wwwroot folder under c:\awstats\
+
+make sure the application pool is set to NET2.0 with enable 32bit applications set to true
+
+On server level create a module handler with settings:
+
+*.pl
+isapi module
+c:\perl\bin\perlex30.dll
+perl for pl extension
+
+*.pl
+isapi module
+c:\perl\bin\perlex30.dll
+perl for pl extension
+Here you have to do this if the perlex30.dll  is not existed:
+
+Your workaround was to use 32-bit version of perl. If you want to use the 64-bit version, this worked for me on IIS 8.5 Windows 2012 R2:
+
+Add Module Mapping to your site:
+Request path: *.pl
+Module: CgiModule
+Executable: C:\Perl64\bin\perl.exe “%s” %s
+Name: Perl CGI
+You can test it by creating the following ‘hello world’ page:
+
+use strict;
+use CGI;
+
+my $page = new CGI;
+my $msg = "Hello from ActivePerl CGI!";
+
+print $page->header( "text/html" ),$page->start_html( $msg );
+print $page->h2($msg);
+print $page->end_html;
+
+use strict;
+use CGI;
+ 
+my $page = new CGI;
+my $msg = "Hello from ActivePerl CGI!";
+ 
+print $page->header( "text/html" ),$page->start_html( $msg );
+print $page->h2($msg);
+print $page->end_html;
+ WebsitePanel
+
+add statistics service to server. Choose AWstats.
+Copy everything from the template txt field to a template file ( due to a bug which interprets the % signs incorrectly, this field cannot be used in versions 1.2 till 2.1 latest beta ). Empty the txt field completely.
+put the name and path to the file in the use template path file field underneath the txt field
+instead of the txt field, the file will now be read and config needs to be done in here.
+Change the awstats help url to the correct values ( pointing to the awstats virtual dir created earlier. This url will be used by all customers to access the stats.
+
+In the template file ( eg named awstats.template.conf and located under c:\awstats\wwwroot\cgi-bin\ ) the following needs to be changed:
+
+if you selected only the fields described by awstats, you should be able to use this:
+
+LogFormat = “%time2 %method %url %query %other %host %other %ua %referer %code %bytesd”
+LogFile = “[LOGS_FOLDER]\u_ex%YY-3%MM-3%DD-3.log”
+DirData = “C:\AWStats\data”
+
+LogFormat = “%time2 %method %url %query %other %host %other %ua %referer %code %bytesd”
+LogFile = “[LOGS_FOLDER]\u_ex%YY-3%MM-3%DD-3.log”
+DirData = “C:\AWStats\data”
+The Dirdata entry was also changed because in tests the %systemrive% variable was not correctly parsed.
+
+Change the hosting plan to include the awstats service and allow at least 1 site.
+
+On customer level hoover over websites and choose advanced statistics. Create a stats site here.
+By clicking on view statistics, you will be brought to the stats of that customer.
+
+Windows:
+
+after creating the first customer with stats, WSP will have created a updatestats.bat file in c:\awstats\wwwroot\cgi-bin\
+This bat file needs to be scheduled to keep the stats up to date.
+
+Schedule this file eg hourly.
+https://bartvincke.wordpress.com/2013/12/02/awstats-on-websitepanel/
+
+Check the awastats
+http://185.8.172.162/AWStats/cgi-bin/awstats.pl?config=tamashagar.com

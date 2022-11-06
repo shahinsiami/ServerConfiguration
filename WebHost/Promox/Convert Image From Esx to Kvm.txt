@@ -1,0 +1,17 @@
+
+tar -xvf backup-image.ova
+
+backup-image.ovf
+backup-image.vmdk
+
+
+*file backup-image
+
+
+backup-image-disk1.vmdk:      VMware4 disk image
+backup-image.ova:        POSIXtar archive (GNU)
+
+backup-image.ovf:        XML document text
+
+
+qemu-img convert -f vmdk backup-image-disk1.vmdk -O raw vm-71360-disk-1.raw

@@ -1,0 +1,8 @@
+mysql –u root –p
+SELECT @@global.time_zone;
+SELECT NOW();
+vim /etc/my.cnf
+default-time-zone = '+03:30'
+service mysql restart
+SELECT @@global.time_zone;
+SELECT NOW();

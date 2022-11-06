@@ -1,0 +1,10 @@
+
+cd /usr/local/directadmin
+echo "action=tally&value=username&type=user" >> data/task.queue
+./dataskq d800
+
+
+
+find * -group username
+find * -user username
+find * -name "*username*"

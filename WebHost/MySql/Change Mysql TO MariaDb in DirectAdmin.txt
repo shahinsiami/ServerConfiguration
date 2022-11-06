@@ -1,0 +1,29 @@
+cd /usr/local/directadmin/custombuild
+./build set mysql_backup yes
+./build mysql_backup
+
+cd /usr/local/directadmin/scripts/packages
+mkdir mysql_repo
+mv MySQL*.rpm mysql-repo
+wget http://files.directadmin.com/services/all/mariadb/10.2/10.2.9/MariaDB-10.2.9-centos6-x86_64-server.rpm
+wget http://files.directadmin.com/services/all/mariadb/10.2/10.2.9/MariaDB-10.2.9-centos6-x86_64-client.rpm
+wget http://files.directadmin.com/services/all/mariadb/10.2/10.2.9/MariaDB-10.2.9-centos6-x86_64-devel.rpm
+wget http://files.directadmin.com/services/all/mariadb/10.2/10.2.9/MariaDB-10.2.9-centos6-x86_64-shared.rpm
+wget http://files.directadmin.com/services/all/mariadb/10.2/10.2.9/MariaDB-10.2.9-centos6-x86_64-common.rpm
+wget http://files.directadmin.com/services/all/mariadb/10.2/10.2.9/MariaDB-10.2.9-centos6-x86_64-compat.rpm
+
+
+
+chown diradmin:diradmin MariaDB-10.2.9-centos6-x86_64-*
+chmod 700 MariaDB-10.2.9-centos6-x86_64-*
+
+
+
+cd /usr/local/directadmin/scripts
+./mysql.sh rootpass da_admin daadminpass
+
+
+cd /usr/local/directadmin/custombuild/mysql_backups
+wget http://files1.directadmin.com/services/all/mysql/restore_sql_files.sh
+chmod 755 restore_sql_files.sh
+./restore_sql_files.sh

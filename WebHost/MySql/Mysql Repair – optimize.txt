@@ -1,0 +1,4 @@
+mysqlcheck -u [database_username] -p --auto-repair [database_name]
+
+
+mysqlcheck -u [database_username] -p --optimize [database_name]

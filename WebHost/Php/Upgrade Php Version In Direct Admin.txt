@@ -1,0 +1,12 @@
+cd /usr/local/directadmin/custombuild
+./build set php1_release 7.0
+./build update
+./build php n
+./build rewrite_confs
+
+
+cd /usr/local/directadmin/custombuild
+./build set php5_ver 5.3
+./build update
+./build php n
+./build rewrite_confs

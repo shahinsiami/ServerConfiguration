@@ -1,0 +1,50 @@
+
+curl http://Parspack.com
+
+curl http://Parspack.com -o test.html
+
+curl http://Parspack.com > test.html
+
+
+curl -O http://Parspack.com/inception.mkv.tar.gz -O http://Parspack.com/memento.mp4.tar.gz
+
+
+
+curl ftp://b1032.parspack.org –user USERNAME:PASSWORD
+
+
+curl ftp://b1032.parspack.org/test.tar.gz –user USERNAME:PASSWORD -o test.tar.gz
+
+
+curl -T Star.Wars.zip ftp://b1032.parspack.org/Movie/ –user USERNAME:PASSWORD
+
+
+
+curl -O http://parspack.com/Test1.tar.gz
+
+curl -C – -O http://parspack.com/Test1.tar.gz
+
+curl –url “smtps://smtp.parspack.com:465” –ssl-reqd –mail-from “pedram.sarani@parspack.com” –mail-rcpt “info@parspack.com” –upload-file mailcontent.txt –user “pedram.sarani@parspack.com:PASSWORD” –insecure
+
+
+curl –limit-rate 200k -O http://parspack.com/Enemy.mkv.tar.gz
+ 
+
+
+curl -I http://parspack.com/test.gz.tar
+ 
+
+
+curl -u USERNAME:PASSWORD http://parspack.com
+ 
+
+
+curl -x squid.proxy.com:PORT http://parspack.com
+ 
+
+curl –cacert File.crt https://parspack.com
+ 
+
+
+curl -k https://parspack.com
+ 

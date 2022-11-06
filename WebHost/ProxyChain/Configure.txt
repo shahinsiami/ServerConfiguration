@@ -1,0 +1,30 @@
+apt-get install proxychains
+
+yum install -y git
+cd /usr/local/src
+git clone https://github.com/rofl0r/proxychains-ng.git 
+cd proxychains-ng 
+./configure && make && make install 
+make install-config
+
+yum install -y git
+cd /usr/local/src
+git clone https://github.com/rofl0r/proxychains-ng.git 
+cd proxychains-ng 
+./configure && make && make install 
+make install-config
+
+Debian / Ubuntu :
+
+vim /etc/proxychains.conf
+
+vim /etc/proxychains.conf
+Centos/RHEL 
+vim /usr/local/etc/proxychains.conf
+vim /usr/local/etc/proxychains.conf
+ 
+
+proxychains nmap -sS 8.26.65.101
+
+
+proxychains4 nmap -sS 8.26.65.101

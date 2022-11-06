@@ -1,0 +1,9 @@
+cd /usr/local/directadmin/custombuild
+./build set zend yes
+./build zend
+
+
+
+cd /usr/local/directadmin/custombuild
+./build set ioncube yes
+./build ioncube

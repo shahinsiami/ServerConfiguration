@@ -1,0 +1,5 @@
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www.)?your-site.com [NC]
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www.)?your-other-domain.com [NC]
+RewriteRule .(jpg|jpeg|png|gif)$ http://my-site.com/images/preventhotlink.png [NC,R,L]

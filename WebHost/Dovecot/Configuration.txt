@@ -1,0 +1,12 @@
+/etc/dovecot/
+doveconf -n | head -n 1
+/usr/local/etc/dovecot/README
+cp -r /usr/local/share/doc/dovecot/example-config/* /usr/local/etc/dovecot/
+doveconf -n > dovecot.conf	
+ssl_cert = </etc/ssl/certs/imap.pem
+/etc/pam.d/dovecot --> >>
+auth    required        pam_unix.so
+account required        pam_unix.so
+running dovecot
+doveadm stop
+

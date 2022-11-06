@@ -1,0 +1,14 @@
+/etc/init.d/mysqld stop
+
+mysqld_safe --skip-grant-tables & mysql
+
+use mysql
+UPDATE mysql.user SET password=PASSWORD('rootpass') WHERE user='root';
+FLUSH PRIVILEGES;
+quit
+
+
+killall -9 mysqld_safe; killall -9 mysqld
+/etc/init.d/mysqld start
+
+mysql -uroot -p

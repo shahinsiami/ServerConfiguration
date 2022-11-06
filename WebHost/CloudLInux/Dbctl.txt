@@ -1,0 +1,6 @@
+$ dbctl list
+
+$ dbtop
+
+$ dbctl list |grep test3
+

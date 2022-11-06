@@ -1,0 +1,5 @@
+/vzdump VMID --dumpdir=/var/lib/vz/dump
+
+restore -->
+
+ qmrestore Backup_File VMID

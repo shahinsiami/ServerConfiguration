@@ -1,0 +1,21 @@
+vim /etc/network/interfaces
+
+auto eth0.985
+iface eth0.985 inet static
+
+      address  0.0.0.0
+
+      address  0.0.0.0
+
+netmask  0.0.0.0
+
+
+auto vmbr985
+
+iface vmbr985 inet manual
+
+bridge_ports eth0.985
+bridge_stp off
+bridge_fd 0
+
+ifup vmbr985

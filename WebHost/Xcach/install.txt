@@ -1,0 +1,152 @@
+wget   http://xcache.lighttpd.net/pub/Releases/3.1.0/xcache-3.1.0.tar.gz
+tar -xvf  xcache-3.1.0.tar.gz
+cd xcache-3.1.0
+phpize
+
+wget   http://xcache.lighttpd.net/pub/Releases/3.1.0/xcache-3.1.0.tar.gz
+tar -xvf  xcache-3.1.0.tar.gz
+cd xcache-3.1.0
+phpize
+
+[root@Home]# phpize
+Configuring for:
+PHP Api Version: 20041225
+Zend Module Api No: 20060613
+Zend Extension Api No: 220060519
+[root@Home]#yum install autoconf
+autoconf --version
+
+
+
+[root@Home]# phpize
+Configuring for:
+PHP Api Version: 20041225
+Zend Module Api No: 20060613
+Zend Extension Api No: 220060519
+[root@Home]#yum install autoconf
+autoconf --version
+
+
+
+
+./configure  --enable-xcache
+make
+make install
+
+
+
+./configure  --enable-xcache
+make
+make install
+
+
+
+Installing shared extensions:     /usr/local/lib/php/extensions/no-debug-non-zts-20060613/
+
+Installing shared extensions:     /usr/local/lib/php/extensions/no-debug-non-zts-20060613/
+حال می بایست مسیر زیر رد فایل php.ini به عنوان extension_dir تعریف گردد. مسیر فوق ممکن است با عوض شدن نسخه Xcache متفاوت شود.
+
+vim  /usr/local/lib/php.ini
+
+vim  /usr/local/lib/php.ini
+عبارت extension_dir را جستجو نموده و دایرکتوری بالا را تعریف می نمائیم. کد نهایی چیزی شبیه به زیر می باشد.
+
+extension_dir = “/usr/local/lib/php/extensions/no-debug-non-zts-20060613/”
+
+extension_dir = “/usr/local/lib/php/extensions/no-debug-non-zts-20060613/”
+به انتهای فایل رفته و کد زیر را Paste می نمائیم.
+
+	[xcache-common]
+	;; install as zend extension (recommended), normally “$extension_dir/xcache.so”
+	;; this version is not a Zend Extension, but PHP module, so we do not put zend_extension parameter here.
+	extension = xcache.so
+	[xcache.admin]
+	xcache.admin.auth = On
+	xcache.admin.user = “youradminuser”
+	; xcache.admin.pass = md5($your_password)
+	xcache.admin.pass = “youradminpass”
+	[xcache]
+	xcache.shm_scheme = “mmap”
+	xcache.size = 60M
+	xcache.count = 1
+	xcache.slots = 8K
+	xcache.ttl = 3600
+	xcache.gc_interval = 300
+	; Same as aboves but for variable cache
+	; If you don’t know for sure that you need this, you probably don’t
+	xcache.var_size = 4M
+	xcache.var_count = 1
+	xcache.var_slots = 8K
+	xcache.var_ttl = 0
+	xcache.var_maxttl = 0
+	xcache.var_gc_interval = 300
+	; N/A for /dev/zero
+	xcache.readonly_protection = Off
+	xcache.mmap_path = “/dev/zero”
+	xcache.cacher = On
+	xcache.stat = On
+	
+	
+	
+	
+	
+	[xcache-common]
+	;; install as zend extension (recommended), normally “$extension_dir/xcache.so”
+	;; this version is not a Zend Extension, but PHP module, so we do not put zend_extension parameter here.
+	extension = xcache.so
+	[xcache.admin]
+	xcache.admin.auth = On
+	xcache.admin.user = “youradminuser”
+	; xcache.admin.pass = md5($your_password)
+	xcache.admin.pass = “youradminpass”
+	[xcache]
+	xcache.shm_scheme = “mmap”
+	xcache.size = 60M
+	xcache.count = 1
+	xcache.slots = 8K
+	xcache.ttl = 3600
+	xcache.gc_interval = 300
+	; Same as aboves but for variable cache
+	; If you don’t know for sure that you need this, you probably don’t
+	xcache.var_size = 4M
+	xcache.var_count = 1
+	xcache.var_slots = 8K
+	xcache.var_ttl = 0
+	xcache.var_maxttl = 0
+	xcache.var_gc_interval = 300
+	; N/A for /dev/zero
+	xcache.readonly_protection = Off
+	xcache.mmap_path = “/dev/zero”
+	xcache.cacher = On
+	xcache.stat = On
+ 
+
+service httpd restart
+php -v
+
+
+
+service httpd restart
+php -v
+
+
+
+[root@home xcache-3.0.1]# php -v
+PHP 5.2.1 (cli (built: Jan29 2013 03:41:19)
+Copyright (c) 199-2010 The PHP Group
+Zend Engine v2.2.0, Copyright (c) 1998-2010 Zend Technologies
+with XCache v3.0.1, Copyright (c) 2005-2013, by mOo
+with the ionCube PHP Loader v4.2.2, Copyright (c) 2002-2012, by ionCube Ltd.
+with XCache Cacher V3.0.1, Copyright (c) 2005-2013, by mOo
+[root@home xcache-3.0.1]#
+
+
+
+[root@home xcache-3.0.1]# php -v
+PHP 5.2.1 (cli (built: Jan29 2013 03:41:19)
+Copyright (c) 199-2010 The PHP Group
+Zend Engine v2.2.0, Copyright (c) 1998-2010 Zend Technologies
+with XCache v3.0.1, Copyright (c) 2005-2013, by mOo
+with the ionCube PHP Loader v4.2.2, Copyright (c) 2002-2012, by ionCube Ltd.
+with XCache Cacher V3.0.1, Copyright (c) 2005-2013, by mOo
+[root@home xcache-3.0.1]#

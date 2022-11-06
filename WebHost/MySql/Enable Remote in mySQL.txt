@@ -1,0 +1,18 @@
+sudo iptables -A INPUT -p udp --dport 3306 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
+sudo iptables -A OUTPUT -p udp --dport 3306 -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --dport 3306 -j ACCEPT
+sudo iptables -A INPUT -p udp --sport 3306 -j ACCEPT
+sudo iptables -A INPUT -p tcp --sport 3306 -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 3306 -j ACCEPT
+sudo iptables -A OUTPUT -p tcp --sport 3306 -j ACCEPT
+ 
+/sbin/service iptables save (centos)
+iptables-save (debian)
+ 
+service iptables restart
+
+
+
+service mysqld stop
+vim /etc/my.cnf

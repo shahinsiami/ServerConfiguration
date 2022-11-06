@@ -1,0 +1,155 @@
+
+/etc/host 
+
+194.5.195.202 xrl.ir  
+
+hostnamectl set-hostname mail.xrl.ir
+
+yum -y install postfix dovecot
+
+ssl --> pass phrase --> 123456
+mkdir /etc/postfix/ssl
+
+cd /etc/postfix/ssl
+
+openssl genrsa -des3 -out server.key 2048
+
+openssl rsa -in server.key -out server.key.insecure
+
+mv server.key server.key.secure
+
+mv server.key.insecure server.key
+
+برای دستورات زیر pass phrase را خالی بزارید :
+
+openssl req -new -key server.key -out server.csr
+
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+
+
+
+nano /etc/postfix/main.cf
+
+ inet_interfaces و mydestination کامنت باشد.
+
+
+
+myhostname = mail.xrl.ir
+
+mydomain = xrl.ir
+
+myorigin = $mydomain
+
+#home_mailbox = mail/
+
+home_mailbox = Maildir/
+
+mynetworks = 0.0.0.0/0
+
+inet_interfaces = all
+
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+
+smtpd_sasl_type = dovecot
+
+smtpd_sasl_path = private/auth
+
+smtpd_sasl_local_domain =
+
+smtpd_sasl_security_options = noanonymous
+
+broken_sasl_auth_clients = yes
+
+smtpd_sasl_auth_enable = yes
+
+smtpd_recipient_restrictions = permit_sasl_authenticated,permit_mynetworks,reject_unauth_destination
+
+smtp_tls_security_level = may
+
+smtpd_tls_security_level = may
+
+smtp_tls_note_starttls_offer = yes
+
+smtpd_tls_loglevel = 1
+
+smtpd_tls_key_file = /etc/postfix/ssl/server.key
+
+smtpd_tls_cert_file = /etc/postfix/ssl/server.crt
+
+smtpd_tls_received_header = yes
+
+smtpd_tls_session_cache_timeout = 3600s
+
+tls_random_source = dev:/dev/urandom
+
+
+
+/etc/postfix/master.cf 
+
+smtps     inet  n       -       n       -       -       smtpd
+
+
+
+submission     inet  n       -       n       -       -       smtpd
+
+  -o syslog_name=postfix/submission
+
+  -o smtpd_sasl_auth_enable=yes
+
+  -o smtpd_recipient_restrictions=permit_sasl_authenticated,reject_unauth_destination
+
+  -o milter_macro_daemon_name=ORIGINATING
+
+smtps     inet  n       -       n       -       -       smtpd
+
+  -o syslog_name=postfix/smtps
+
+  -o smtpd_sasl_auth_enable=yes
+
+  -o smtpd_recipient_restrictions=permit_sasl_authenticated,reject_unauth_destination
+
+  -o milter_macro_daemon_name=ORIGINATING
+
+سپس فایل /etc/dovecot/conf.d/10-master.conf را باز کرده و بخش Postfix smtp-auth را بصورت زیر تنظیم می کنیم:
+
+# Postfix smtp-auth
+
+unix_listener /var/spool/postfix/private/auth {
+
+mode = 0660
+
+user = postfix
+
+group = postfix
+
+}
+
+/etc/dovecot/conf.d/10-auth.conf  auth_mechanisms  plain login 
+
+
+
+systemctl restart postfix
+
+systemctl enable postfix
+
+systemctl restart dovecot
+
+systemctl enable dovecot
+
+ /etc/dovecot/conf.d/10-mail.conf  
+
+mail_location = maildir:~/Maildir
+
+ /etc/dovecot/conf.d/20-pop3.conf را باز کرده و مقدار pop3_uidl_format = %08Xu%08Xv 
+
+
+systemctl restart dovecot
+
+systemctl restart postfix
+
+
+useradd -m info -s /sbin/nologin
+
+passwd info
+

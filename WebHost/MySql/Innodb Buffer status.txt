@@ -1,0 +1,16 @@
+echo "show innodb status\G" | mysql -u root -p
+0 queries inside InnoDB, 100 queries in queue
+
+service mysqld restart
+ 
+# to find queries in queue
+mysqladmin processlist -u root -p > a.txt
+
+echo "show innodb status\G" | mysql -u root -p > 1.txt
+cat 1.txt | grep localhost | awk '{print $9 }' | sort | uniq -c | sort -n
+
+	
+alter table xyz engine=myisam;
+
+
+

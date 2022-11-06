@@ -1,0 +1,12 @@
+# login to MySQL with root user
+mysql -u root -p
+ 
+# create da_admin user based on config file
+GRANT ALL PRIVILEGES ON *.* TO da_admin@localhost IDENTIFIED BY 'password'WITH GRANT OPTION;
+
+
+
+cd /usr/local/directadmin/custombuild
+./build update
+./build set roundcube yes
+./build roundcube

@@ -1,0 +1,21 @@
+yum install ImageMagick
+yum install ImageMagick-devel
+
+cd /usr/local/src
+wget http://pecl.php.net/get/imagick-3.0.1.tgz
+tar zxf imagick-3.0.1.tgz
+cd imagick-3.0.1
+phpize
+./configure
+make
+make install
+
+
+extension_dir = "/usr/local/lib/php/extensions/no-debug-non-zts-20060613"
+
+
+
+extension=imagick.so
+
+
+service httpd restart

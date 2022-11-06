@@ -1,0 +1,82 @@
+
+yum install httpd
+
+yum install mariadb-server mariadb
+
+
+systemctl start httpd.service
+
+systemctl start mariadb
+
+
+mysql_secure_installation
+
+
+mysql -uroot -p
+
+
+
+yum install php php-mysql
+
+
+systemctl enable httpd.service
+
+systemctl enable mariadb.service
+
+
+cd /etc/httpd/conf.d/
+
+
+
+nano vhost.conf
+
+
+
+<virtualhost *:80>
+     ServerAdmin webmaster@example.com
+     ServerName xrl.ir
+     ServerAlias www.xrl.ir
+     DocumentRoot /var/www/xrl.ir/public_html/
+     ErrorLog /var/www/xrl.ir/logs/error.log
+     CustomLog /var/www/xrl.ir/logs/access.log combined</virtualhost>
+</virtualhost>
+<virtualhost *:443>
+        SSLEngine on
+        SSLCertificateFile /etc/ssl/certs/certificate.crt
+        SSLCertificateKeyFile /etc/ssl/certs/private.key
+        SSLCACertificateFile /etc/ssl/certs/chain.crt
+        <directory /var/www/xrl.ir/public_html>
+        AllowOverride All
+        </directory>
+        DocumentRoot /var/www/xrl.ir/public_html
+        ServerName xrl.ir
+</virtualhost>
+
+
+mkdir -p /var/www/xrl.ir/public_html
+
+mkdir /var/www/xrl.ir/logs
+
+
+
+cd /var/www/xrl.ir/public_html
+
+
+<?php
+
+phpinfo();
+
+?>
+
+
+cd /etc/ssl/certs/
+
+certificate.crt و private.key و chain.crt ایجاد کرده و به ترتیب کدهای ssl که شمال certificate و private و bundle را وارد می کنیم.
+
+
+yum install mod_ssl
+
+
+
+service httpd restart
+

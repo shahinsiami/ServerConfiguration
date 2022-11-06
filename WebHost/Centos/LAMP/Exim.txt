@@ -1,0 +1,142 @@
+
+194.5.195.202 xrl.ir
+
+194.5.195.202 mail.xrl.ir
+
+
+
+yum remove postfix
+
+
+
+yum install epel-release
+
+
+
+yum update
+
+yum install exim
+
+systemctl enable exim.service
+
+systemctl start exim
+
+
+openssl req -nodes -x509 -newkey rsa:2048 -keyout mail.xrl.ir.key -out mail.xrl.ir.crt -days 365
+
+بعد فایل کانفیگ exim در مسیر /etc/exim/exim.conf را باز کرده مقدار primary_hostname  را از کامنت خارج کرده و بصورت
+
+primary_hostname = mail.xrl.ir
+
+
+
+domainlist local_domains = @ : xrl.ir : mail.xrl.ir
+
+domainlist relay_to_domains =
+
+hostlist   relay_from_hosts = 0.0.0.0/0
+
+حال در فایل کانفیگ به بخش local_delivery رفته و خطوط زیر آن را با توجه به مقادیر زیر حذف یا اضافه می کنیم:
+
+driver = appendfile
+
+delivery_date_add
+
+envelope_to_add
+
+return_path_add
+
+directory = $home/Maildir
+
+maildir_format
+
+maildir_use_size_file
+
+group = mail
+
+mode = 0660
+
+
+
+
+dovecot_login:
+
+driver = dovecot
+
+public_name = LOGIN
+
+server_socket = /var/run/dovecot/auth-client
+
+server_set_id = $auth1
+
+
+
+dovecot_plain:
+
+driver = dovecot
+
+public_name = PLAIN
+
+server_socket = /var/run/dovecot/auth-client
+
+server_set_id = $auth1
+
+سپس نوبت به نصب dovecot می رسد.
+
+yum install dovecot
+
+systemctl start dovecot
+
+systemctl enable dovecot
+
+/etc/dovecot/conf.d/10-ssl.conf را باز کرده و بخش certificate را بصورت زیر اصلاح می کنیم:
+
+ssl_cert = </etc/ssl/mail.xrl.ir.crt
+
+ssl_key = </etc/ssl/mail.xrl.ir.key
+
+ /etc/dovecot/conf.d/10-auth.conf را باز کرده و مقدار disable_plaintext_auth = no را به ابتدای آن اضافه می کنیم.
+
+ /etc/dovecot/conf.d/10-mail.conf را باز کرده و مقدار mail_location = maildir:~/Maildir را به ابتدای آن اضافه می کنیم.
+
+ /etc/dovecot/conf.d/10-master.conf را باز کرده و بخش unix_listener auth-userdb را یافته و بصورت زیر اصلاح می کنیم:
+
+
+
+  unix_listener auth-userdb {
+
+    mode = 0660
+
+    user = exim
+
+    #group =
+
+  }
+
+
+
+systemctl restart dovecot
+
+systemctl restart exim
+
+
+
+useradd info
+
+passwd info
+
+mkdir /home/info/Maildir
+
+chown info:info /home/info/Maildir
+
+chmod -R 700 /home/info/Maildir
+
+حال می توانید با یک mail client به سرور میل متصل شوید.
+
+
+
+root: info@xrl.ir را بعد از 
+
+mailer-daemon:  postmaster
+
+postmaster:     root

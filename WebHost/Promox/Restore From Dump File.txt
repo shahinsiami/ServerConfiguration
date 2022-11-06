@@ -1,0 +1,8 @@
+
+qmrestore vmbackup.vma VMID 
+ 
+
+qm create -archive vmbackup.vma VMID
+
+
+qmrestore --storage local vmbackup.vma VMID

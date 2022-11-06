@@ -1,0 +1,14 @@
+
+rsync -aS /home/mystuff/ root@remoteserver:/home/stuff
+
+
+
+/rsync -aS  root@remoteserver:/home/stuff/ /home/mystuff
+
+
+
+rsync --inplace --sparse --append --bwlimit=50000 vzdump-qemu-9525.vma root@185.8.172.73:/var/lib/vz/dump/vzdump-qemu-9525.vma
+
+
+
+scp -r -P 4441 -l 80000 TCPRcvBufPoll=yes vm-backup.vma root@185.8.173.29:/var/lib/vz/dump

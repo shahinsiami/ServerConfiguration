@@ -1,0 +1,149 @@
+ابتدا دستورات زیر را وارد می کنیم:
+
+yum install epel-release
+
+yum install nginx
+
+yum install mariadb-server mariadb
+
+سپس سروریس ها را استارت و بصورت دائمی فعال می کنیم:
+
+systemctl start nginx
+
+systemctl start mariadb
+
+systemctl enable nginx
+
+systemctl enable mariadb
+
+حال برای تنظیم mariadb دستور زیر را وارد می کنیم:
+
+mysql_secure_installation
+
+
+
+mysql -uroot -p
+
+
+yum install php php-mysql php-fpm
+
+
+
+vi /etc/php.ini
+
+
+vi /etc/nginx/nginx.conf
+
+#
+# The default server
+#
+server {
+    listen       80;
+    server_name xrl.ir;
+
+   
+    location / {
+        root   /usr/share/nginx/html;
+        index index.php  index.html index.htm;
+    }
+
+    error_page  404              /404.html;
+    location = /404.html {
+        root   /usr/share/nginx/html;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    location ~ \.php$ {
+        root           /usr/share/nginx/html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
+حال فایل زیر را باز می کنیم:
+
+vi /etc/php-fpm.d/www.conf
+
+سپس مقادیر user و group را از apache  به nginx تغییر می دهیم و فایل را save می کنیم و سرویس php-fpm را ریست می کنیم.
+
+systemctl start php-fpm
+
+systemctl enable php-fpm
+
+
+
+سپس به مسیر /usr/share/nginx/html/ رفته و یک فایل با نام index.php ایجاد کرده و یک کد php در آن قرار می دهیم:
+
+<?php
+
+phpinfo();
+
+?>
+
+سپس به مسیر زیر می رویم:
+
+cd /etc/ssl/certs/
+
+دو فایل با نام certificate.crt و private.key و ایجاد کرده و به ترتیب کدهای ssl که شامل certificate و Bundle هست را در فایل certificate.crt و محتویات private را در فایل  private.key وارد می کنیم.
+
+بلاک  default باید بصورت زیر تغییر داده شود:
+
+server {
+    listen       80;
+    server_name xrl.ir;
+
+
+    location / {
+        root   /usr/share/nginx/html;
+        index index.php  index.html index.htm;
+    }
+
+    error_page  404              /404.html;
+    location = /404.html {
+        root   /usr/share/nginx/html;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    location ~ \.php$ {
+        root           /usr/share/nginx/html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
+server {
+    listen       443;
+    server_name xrl.ir;
+
+    ssl on;
+    ssl_certificate /etc/ssl/certs/certificate.crt;
+    ssl_certificate_key /etc/ssl/certs/private.key;
+
+
+location ~ \.php$ {
+        root           /usr/share/nginx/html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+}
+}
+
+
+systemctl restart nginx
+
+https://xrl.ir

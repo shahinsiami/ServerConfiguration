@@ -1,0 +1,33 @@
+vim /etc/yum.repos.d/CentOS-Base.repo
+[base]
+name=CentOS-$releasever - Base
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
+#baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+exclude=postgresql*
+
+[updates]
+name=CentOS-$releasever - Updates
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
+#baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
+gpgcheck=۱ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+exclude=postgresql*
+
+--------------------------------------------
+yum install postgresql93-server
+service postgresql-۹.۳ initdb
+chkconfig postgresql-۹.۳ on
+service postgresql-۹.۳ start
+yum install postgresql-devel
+pecl download pdo_pgsql
+tar xzf PDO_PGSQL-۱.۰.۲.tgz
+cd PDO_PGSQL-۱.۰.۲
+phpize
+./configure --with-pdo-pgsql=/path/to/postgres
+make
+make install
+php -i | grep php.ini
+add extension=pdo_pgsql.so To php.ini
+service httpd restart
+php -m | grep pdo_pgsql

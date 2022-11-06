@@ -1,0 +1,2 @@
+smartctl -t short /dev/sdc
+smartctl -t long /dev/sdc

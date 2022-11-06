@@ -1,0 +1,18 @@
+	
+mysqldump -u database_user -p database > database.bak
+
+cp database.bak database-copy.bak
+
+
+
+mysql -u database_user -p
+DROP DATABASE database;
+CREATE DATABASE database;
+
+
+replace 'http://domain.com' 'https://domain.com' -- database-copy.bak
+replace 'http://www.domain.com' 'https://www.domain.com' -- database-copy.bak
+
+
+
+mysql -u database_user -p database < database-copy.bak

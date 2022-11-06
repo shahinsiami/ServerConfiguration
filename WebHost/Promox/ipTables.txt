@@ -1,0 +1,3 @@
+iptables -L -n -v
+iptables -L -n -v -t mangle
+arptables -L -n -v

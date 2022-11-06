@@ -1,0 +1,30 @@
+
+yum install epel-release
+yum install ntfs-3g
+
+
+fdisk -l | grep /dev 
+
+
+mkdir /external
+ 
+
+
+  vim /etc/fstab
+
+
+
+
+/dev/sdb1      /external   ntfs-3g  ro,umask=0222,defaults 0 0
+
+
+
+/dev/sdb1      /external   ntfs-3g  rw,umask=0000,defaults 0 0
+ 
+
+
+mount /external 
+
+
+
+

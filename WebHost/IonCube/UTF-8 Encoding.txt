@@ -1,0 +1,11 @@
+cd /usr/local/directadmin/data/skins/enhanced
+
+
+cp -p lang/en/lf_standard.html lang/en/my_lf_standard.html
+perl -pi -e 's/iso-8859-1/UTF-8/' lang/en/my_lf_standard.html
+echo "LF_STANDARD=my_lf_standard.html" >> files_custom.conf
+
+
+
+service directadmin restart
+service httpd restart

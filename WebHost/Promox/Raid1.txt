@@ -1,0 +1,35 @@
+
+umount /diskc
+umount /diskd
+
+
+
+mdadm --create /dev/md0 --level=1 --RAID-device=2 /dev/sd["bc"]1
+ 
+
+vim /etc/mdadm/mdadm.conf
+
+ARRAY /dev/md0 devices=/dev/sdb1,/dev/sdc1 level=1 num-devices=2 auto=yes
+
+DEVICE /dev/sdb1 /dev/sdc1
+
+
+ 
+mkfs.ext3 /dev/md0
+ 
+
+mkdir /raidbc
+ 
+
+vim /etc/fstab
+
+dev/md0 /raidbc   ext3/
+
+
+cat /proc/mdstat
+ 
+
+
+mount /dev/md0 /raidbc
+
+

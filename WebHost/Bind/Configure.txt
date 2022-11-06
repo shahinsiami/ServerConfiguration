@@ -1,0 +1,91 @@
+	
+yum install bind bind-utils -y
+ 
+
+apt-get update && apt-get install bind9
+
+ 
+ 
+
+Vim /etc/named.conf
+
+
+listen-on port 53 { 127.0.0.1; };
+listen-on-v6 port 53 { ::1; };
+
+ 
+
+allow-query     { any; };
+allow-transfer     { localhost;  };
+recursion no;
+
+
+dnssec-lookaside auto;
+
+ 
+ 
+/etc/named.conf 
+zone "parspack.com" IN {
+                type master;
+                file "parspack.zone";
+                allow-update { none; };
+        };
+1
+2
+3
+4
+5
+zone "parspack.com" IN {
+                type master;
+                file "parspack.zone";
+                allow-update { none; };
+        };
+
+ 
+ 
+
+vim /var/named/parspack.com.zone
+
+ 
+ 
+$TTL 86400
+@ IN  SOA ns1.parspack.com. hostmaster.parspack.com. (
+2017042201  ;Serial
+3600        ;Refresh
+1800        ;Retry
+604800      ;Expire
+86400       ;Minimum TTL
+     )
+IN  NS     ns1. parspack.com.
+IN  MX  10 mail. parspack.com.
+ns1    IN  A      192.168.0.1  
+www    IN  A      192.168.0.2  
+ftp    IN  CNAME  www. parspack.com.  
+bill   IN  A      192.168.0.3
+fred   IN  A      192.168.0.4
+
+
+
+$TTL 86400
+@ IN  SOA ns1.parspack.com. hostmaster.parspack.com. (
+2017042201  ;Serial
+3600        ;Refresh
+1800        ;Retry
+604800      ;Expire
+86400       ;Minimum TTL
+     )
+IN  NS     ns1. parspack.com.
+IN  MX  10 mail. parspack.com.
+ns1    IN  A      192.168.0.1  
+www    IN  A      192.168.0.2  
+ftp    IN  CNAME  www. parspack.com.  
+bill   IN  A      192.168.0.3
+fred   IN  A      192.168.0.4
+
+ 
+
+service named restart
+
+ 
+
+chkconfig named on

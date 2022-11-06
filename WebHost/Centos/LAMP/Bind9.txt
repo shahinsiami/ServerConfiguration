@@ -1,0 +1,70 @@
+bind9
+
+
+yum update -y
+
+yum install bind bind-utils -y
+
+
+allow-transfer     { localhost; 2.2.2.2; };
+
+allow-query
+
+allow-query { any; };
+
+ listen-on port 53
+
+recursion   off 
+
+
+
+zone "xrl.ir" IN {
+
+                type master;
+
+                file "xrl.ir.zone";
+
+                allow-update { none; };
+
+        };
+
+
+
+nano -w /var/named/xrl.ir.zone
+
+
+$TTL    604800
+
+@       IN      SOA     ns1.xrl.ir. root.xrl.ir. (
+
+                              2         ; Serial
+
+                         604800         ; Refresh
+
+                          86400         ; Retry
+
+                        2419200         ; Expire
+
+                         604800 )       ; Negative Cache TTL
+
+;
+
+@       IN      NS      ns1.xrl.ir.
+
+@       IN      NS      ns2.xrl.ir.
+
+@       IN      A       194.5.205.123
+
+www       IN      A       194.5.205.123
+
+ns1       IN      A       194.5.205.123
+
+ns2       IN      A       194.5.205.123
+
+@       IN      AAAA    ::1
+
+
+
+systemctl restart named
+
+systemctl enable named

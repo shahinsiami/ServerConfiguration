@@ -1,0 +1,16 @@
+cd /usr/local/directadmin/custombuild/
+./build version
+
+
+cd /usr/local/directadmin/custombuild/
+./build version
+
+
+./build set webserver nginx
+./build set php1_mode php-fpm
+./build update
+./build nginx
+./build rewrite_confs
+
+
+nginx webserver is only compatible with php-fpm PHP mode.

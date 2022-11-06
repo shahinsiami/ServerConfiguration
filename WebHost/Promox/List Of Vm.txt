@@ -1,0 +1,7 @@
+qm list
+
+qm status VMID
+
+qm start VMID
+
+qm stop VMID

@@ -1,0 +1,24 @@
+$ lvectl set UserID –option=value
+
+
+
+$ lvectl set 504 –speed=150%
+
+
+$ lvectl set 504 –speed=100% --pmem=1G –io=2048
+
+
+$ lvectl set-user clttest3 --maxEntryProcs 40 save
+
+
+$ lvectl limits –unlimited
+
+$ lvetop
+
+ID, EP, PNO, TNO, SPEED, MEM, IO, IOPS
+
+
+
+$ lveps -p
+
+

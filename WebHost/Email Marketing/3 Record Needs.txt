@@ -1,0 +1,3 @@
+Reverse DNS (PTR)
+SPF (Sender Policy Framework)
+DKIM (DomainKeys Identified Mail)

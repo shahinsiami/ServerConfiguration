@@ -1,0 +1,29 @@
+lsusb | grep Kingston
+qm set 45480 -usb0 host=13fe:3600 --> connectio to 45480 usb with id 3600 (id from lsusb)
+ /etc/qemu-server
+ qm set <VMID> -hostusb xxxx:*	--> automatic connect to host after that set --> hostusb:xxxx:* --> in config file
+ ---------------------------------------
+method 2 
+>>>
+qm monitor <VM_ID> >>>
+qm> info usbhost
+Bus 3, Addr 2, Port 1.2, Speed 1.5 Mb/s
+  Vendor Specific: USB device 0529:0001, HASP 2.17
+Bus 5, Addr 3, Port 2, Speed 12 Mb/s
+  Class 00: USB device 0624:0248, USB Composite Device-0
+  <<<
+lsusb -t
+  >>>
+/: Bus 05.Port 1: Dev 1, Class=root_hub, Driver=uhci_hcd/2p, 12M
+/: Bus 04.Port 1: Dev 1, Class=root_hub, Driver=uhci_hcd/2p, 12M
+/: Bus 03.Port 1: Dev 1, Class=root_hub, Driver=uhci_hcd/2p, 12M
+    |__ Port 1: Dev 4, If 0, Class=vend., Driver=usbfs, 1.5M
+    |__ Port 2: Dev 5, If 0, Class=vend., Driver=usbfs, 1.5M
+/: Bus 02.Port 1: Dev 1, Class=root_hub, Driver=uhci_hcd/2p, 12M
+/: Bus 01.Port 1: Dev 1, Class=root_hub, Driver=ehci_hcd/2p, 480M
+    |__ Port 1: Dev 2, If 0, Class=hub, Driver=hub/4p, 480M
+        |__ Port 3: Dev 5, If 0, Class=comm., Driver=usbfs, 480M
+        |__ Port 3: Dev 5, If 1, Class=data, Driver=usbfs, 480M
+<<<
+/etc/pve/qemu-server/<VM_ID>.conf --> configure file --> usb0: host=3-1.2
+
